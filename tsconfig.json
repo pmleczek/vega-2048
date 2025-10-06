@@ -1,6 +1,17 @@
 {
-    "extends": "@tsconfig/react-native/tsconfig.json",
-    "compilerOptions": {
-        "types": ["jest", "@amazon-devices/react-native-kepler"], /* Override "jest", "react-native" from @tsconfig/react-native */
-    },
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "jest",
+      "@amazon-devices/react-native-kepler"
+    ] /* Override "jest", "react-native" from @tsconfig/react-native */,
+    "baseUrl": ".",
+    "paths": {
+      "@atoms": ["src/atoms"],
+      "@components": ["src/components"],
+      "@hooks": ["/src/hooks"],
+      "@screens": ["/src/screens"],
+      "@utils": ["./src/utils"]
+    }
+  }
 }

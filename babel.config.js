@@ -5,5 +5,20 @@
  */
 module.exports = {
   presets: ['module:metro-react-native-babel-preset'],
-  plugins: ['@amazon-devices/react-native-reanimated/plugin'],
+  plugins: [
+    [
+      'module-resolver',
+      {
+        root: ['.'],
+        alias: {
+          '@atoms': './src/atoms',
+          '@components': './src/components',
+          '@hooks': './src/hooks',
+          '@screens': './src/screens',
+          '@utils': './src/utils',
+        },
+      },
+    ],
+    '@amazon-devices/react-native-reanimated/plugin',
+  ],
 };
