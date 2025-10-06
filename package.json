@@ -1,5 +1,5 @@
 {
-  "name": "@amazon-devices/vega2048",
+  "name": "vega-2048",
   "version": "0.0.1",
   "private": true,
   "files": ["dist"],
