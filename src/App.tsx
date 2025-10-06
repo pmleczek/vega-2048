@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import type { ColorValue } from 'react-native';
 import { Alert, StyleSheet, Text, View } from 'react-native';
 import {
@@ -6,6 +6,10 @@ import {
   GestureDetector,
   GestureHandlerRootView,
 } from '@amazon-devices/react-native-gesture-handler';
+import {
+  type HWEvent,
+  useTVEventHandler,
+} from '@amazon-devices/react-native-kepler';
 import Animated, {
   LinearTransition,
   ZoomIn,
@@ -224,6 +228,10 @@ function getPoints(tiles: Tile[]): number {
   return filterOutZombieTiles(tiles).reduce((acc, tile) => acc + tile.value, 0);
 }
 
+function isDPadEvent(eventType: string | Directions): eventType is Directions {
+  return Object.values(Directions).includes(eventType as Directions);
+}
+
 export const App = () => {
   const [tiles, setTiles] = React.useState(makeInitialBoard);
   const [gameOver, setGameOver] = React.useState(false);
@@ -232,6 +240,32 @@ export const App = () => {
     setTiles(makeInitialBoard());
     setGameOver(false);
   }, []);
+
+  const handleTVEvent = useCallback(
+    (event: HWEvent) => {
+      if (event.eventKeyAction !== 1) {
+        return;
+      }
+
+      let direction: Directions;
+      if (isDPadEvent(event.eventType)) {
+        direction = event.eventType;
+        const nextTiles = makeMove(tiles, direction);
+        setTiles(nextTiles);
+        if (isBoardFull(nextTiles)) {
+          setGameOver(true);
+          setTimeout(() => {
+            Alert.alert('Game over!', `${getPoints(tiles)} points`, [
+              { text: 'Play again', onPress: handleReset },
+            ]);
+          }, 500);
+        }
+      }
+    },
+    [handleReset, tiles],
+  );
+
+  useTVEventHandler(handleTVEvent);
 
   const fling = Gesture.Pan()
     .runOnJS(true)
