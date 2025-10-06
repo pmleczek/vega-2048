@@ -5,8 +5,11 @@ import {
   Gesture,
   GestureDetector,
   GestureHandlerRootView,
-} from 'react-native-gesture-handler';
-import Animated, { LinearTransition, ZoomIn } from 'react-native-reanimated';
+} from '@amazon-devices/react-native-gesture-handler';
+import Animated, {
+  LinearTransition,
+  ZoomIn,
+} from '@amazon-devices/react-native-reanimated';
 
 const N = 4;
 const TILE_SIZE = 72;
@@ -221,7 +224,7 @@ function getPoints(tiles: Tile[]): number {
   return filterOutZombieTiles(tiles).reduce((acc, tile) => acc + tile.value, 0);
 }
 
-export default function Game2048Example() {
+export const App = () => {
   const [tiles, setTiles] = React.useState(makeInitialBoard);
   const [gameOver, setGameOver] = React.useState(false);
 
@@ -293,7 +296,7 @@ export default function Game2048Example() {
       </GestureDetector>
     </GestureHandlerRootView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
