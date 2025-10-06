@@ -17,9 +17,11 @@
     "release": "npm-run-all lint test build:app"
     },
   "dependencies": {
+    "@amazon-devices/expo-linear-gradient": "^2.0.0",
     "@amazon-devices/react-native-gesture-handler": "^2.0.0",
     "@amazon-devices/react-native-kepler": "^2.0.0",
     "@amazon-devices/react-native-reanimated": "^2.0.0",
+    "@amazon-devices/react-native-svg": "^2.0.0",
     "react": "18.2.0",
     "react-native": "0.72.0"
   },
